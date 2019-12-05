@@ -126,7 +126,6 @@ function Rocket(dna) {
   this.velocity = createVector();
   this.acceleration = createVector();
   this.completed = false;
-  this.crashed = false;
   this.finishTime = 0;
 
   if (dna) {
@@ -149,10 +148,6 @@ function Rocket(dna) {
      if(this.completed) {
        this.fitness *= 10;
      }
-
-     if (this.crashed) {
-       this.fitness /= 10;
-     }
    }
 
 
@@ -169,7 +164,7 @@ function Rocket(dna) {
 
      this.applyForce(this.dna.genes[count]);
 
-     if(!this.completed && !this.crashed) {
+     if(!this.completed) {
        this.velocity.add(this.acceleration);
        this.position.add(this.velocity);
        this.acceleration.mult(0);
