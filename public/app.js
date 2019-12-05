@@ -3,26 +3,30 @@ var popul;
 var lifespan = 300;
 var lifeP;
 var count = 0;
+var generation = 1;
 var target;
 var maxForce = 0.1;
 
 function setup() {
+  createElement('h1', 'Genetic Algorithm Demo - CS 652')
   createCanvas(400, 300);
   popul = new Population();
   lifeP = createP();
   target = createVector(width/2, 50);
+
 }
 
 function draw() {
   background(0);
   popul.run();
-  lifeP.html(count);
+  lifeP.html("Number of steps: " + count);
   count++;
 
   if (count == lifespan) {
     popul.evaluate();
     popul.selection();
     count = 0;
+    generation++;
   }
 
   ellipse(target.x, target.y, 30, 30);
@@ -46,11 +50,15 @@ function Population(){
         maxfit = this.rockets[i].fitness;
       }
     }
+
+    var averageFitness = 0;
     for (var i = 0; i < this.popsize; i++) {
+      averageFitness += this.rockets[i].fitness;
       this.rockets[i].fitness /= maxfit;
     }
 
-    createP("Fitness function:" + maxfit);
+    createP("Average Fitness Score for generation " + generation + ": "  + round(averageFitness/this.popsize));
+
     this.matingpool = [];
 
     for (var i = 0; i < this.popsize; i++) {
@@ -114,7 +122,7 @@ function DNA(genes) {
   this.mutation = function() {
     for(var i = 0; i < this.genes.length; i++) {
       if (random(1) < 0.01) {
-        this.genes[i] = p5.Vecotor.random2D();
+        this.genes[i] = p5.Vector.random2D();
         this.genes[i].setMag(maxForce);
       }
     }
@@ -126,7 +134,6 @@ function Rocket(dna) {
   this.velocity = createVector();
   this.acceleration = createVector();
   this.completed = false;
-  this.finishTime = 0;
 
   if (dna) {
     this.dna = dna;
@@ -154,12 +161,9 @@ function Rocket(dna) {
    this.update = function() {
 
      var d = dist(this.position.x, this.position.y, target.x, target.y);
-     console.log(d);
      if (d < 10) {
        this.completed = true;
        this.position = target.copy();
-     } else {
-       this.finishTime++;
      }
 
      this.applyForce(this.dna.genes[count]);
