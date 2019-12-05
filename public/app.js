@@ -58,6 +58,8 @@ function Population(){
     }
 
     createP("Average Fitness Score for generation " + generation + ": "  + round(averageFitness/this.popsize));
+    createP("Max Score for generation " + generation + ": "  + round(maxfit));
+
 
     this.matingpool = [];
 
