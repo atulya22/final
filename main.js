@@ -11,5 +11,4 @@ app.use(bodyParser.json());
 app.get('/', (req, res) => {
     res.render('index.html');
 });
-
 app.listen(PORT, ()=> { console.log('Application running on port ',PORT)});

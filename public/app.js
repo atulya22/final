@@ -6,11 +6,6 @@ var count = 0;
 var target;
 var maxForce = 0.1;
 
-var rx = 100;
-var ry = 150;
-var rw = 200;
-var rh = 10;
-
 function setup() {
   createCanvas(400, 300);
   popul = new Population();
@@ -29,9 +24,6 @@ function draw() {
     popul.selection();
     count = 0;
   }
-
-  // fill(255);
-  // rect(100, 150, 200, 10);
 
   ellipse(target.x, target.y, 30, 30);
 }
@@ -174,19 +166,6 @@ function Rocket(dna) {
      } else {
        this.finishTime++;
      }
-
-
-     // if(this.position.x > rx && this.position.x < (rx + rw) && this.position.y > ry && this.position.y < (ry + rh)) {
-     //   this.crashed = true;
-     // }
-     //
-     // if(this.position.x > width || this.position.x < 0) {
-     //   this.crashed = true;
-     // }
-     //
-     // if(this.position.y > height || this.position.y < 0) {
-     //   this.crashed = true;
-     // }
 
      this.applyForce(this.dna.genes[count]);
 
